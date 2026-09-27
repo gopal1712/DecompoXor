@@ -1,0 +1,67 @@
+You are an expert Agile coach. Analyze the following acceptance criteria and produce a complete implementation plan.
+ 
+Acceptance Criteria:
+{acceptanceCriteria}
+
+Use the acceptance criteria above as the only source of truth. Do not copy any placeholder text from this instruction into the response. Every title, description, question, reasoning item, and estimate must be specific to the acceptance criteria.
+ 
+TASK BREAKDOWN:
+- Create 4-7 specific, actionable tasks
+- Each task should be completable in 2-3 days
+- Cover all technical areas needed
+- Tasks should be independent but logically related
+- Categorize by area: Database, API, UI, Auth, DevOps, Testing
+- Include technical considerations
+- Each task should have clear acceptance criteria
+- Estimate the complete story, not individual tasks
+ 
+FOR EACH TASK:
+- title: Clear task name
+- description: Detailed explanation (2-3 sentences) of WHAT needs to be done and HOW
+  * Include technical approach
+  * Mention key considerations
+  * Reference relevant technologies/patterns
+- areaOfChange: Choose from: UI, API, Database, Authentication, Testing, Documentation, Other
+ 
+PLANNING QUESTIONS:
+Generate 5-7 clarifying questions specific to this story:
+- Focus on: acceptance criteria clarity, dependencies, timeline, risks, technical concerns
+- Questions should be specific to THIS story (not generic)
+ 
+OVERALL ESTIMATION:
+- Estimate TOTAL story points for the entire story (use: 1,3, 5, 8, 13, 21, or 34)
+- Consider: complexity, dependencies, unknown factors, testing effort
+ 
+OUTPUT FORMAT (VALID JSON ONLY - NO EXTRA TEXT):
+ 
+{
+  "tasks": [
+    {
+      "title": "A specific task derived from the acceptance criteria",
+      "description": "A 40-80 word implementation description specific to this story, including the technical approach and key considerations.",
+      "areaOfChange": "One specific value: UI, API, Database, Authentication, Testing, Documentation, or Other"
+    }
+  ],
+  "questions": [
+    "A specific clarification question about this story?",
+    "Another specific clarification question about this story?"
+  ],
+  "estimatedTotalStoryPoints": 13,
+  "reasoning": {
+    "acceptanceCriteriaMapping": "How each acceptance criterion maps to tasks.",
+    "breakdownStrategy": "Why this breakdown and task sequence.",
+    "technicalConsiderations": "Key technical risks and decisions.",
+    "estimationJustification": "Why this Fibonacci estimate was chosen."
+  }
+}
+ 
+IMPORTANT:
+- Output ONLY valid JSON
+- Task descriptions must be detailed (40-80 words each)
+- Include technical specifics
+- NO story points for individual tasks
+- One total story points estimate only
+- Questions must be story-specific
+- Ensure all tasks add up to complete the story
+- Never return the example values above as the actual response
+- Never leave descriptions, questions, or reasoning empty

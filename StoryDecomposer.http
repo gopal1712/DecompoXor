@@ -1,0 +1,6 @@
+@StoryDecomposer_HostAddress = http://localhost:5195
+
+GET {{StoryDecomposer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
