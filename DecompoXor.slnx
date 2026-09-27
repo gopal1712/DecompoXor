@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DecompoXor.Api/DecompoXor.Api.csproj" />
+    <Project Path="src/DecompoXor.Application/DecompoXor.Application.csproj" />
+    <Project Path="src/DecompoXor.Domain/DecompoXor.Domain.csproj" />
+    <Project Path="src/DecompoXor.Infrastructure/DecompoXor.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DecompoXor.IntegrationTests/DecompoXor.IntegrationTests.csproj" />
+    <Project Path="tests/DecompoXor.UnitTests/DecompoXor.UnitTests.csproj" />
+  </Folder>
+</Solution>
