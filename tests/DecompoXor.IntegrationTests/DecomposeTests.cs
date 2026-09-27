@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using DecompoXor.Domain.Entities;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.Configuration; // Added for AddInMemoryCollection extension
 using Xunit;
 
 namespace DecompoXor.IntegrationTests;
@@ -12,7 +13,14 @@ public class DecomposeTests : IClassFixture<WebApplicationFactory<DecompoXor.Api
 
     public DecomposeTests(WebApplicationFactory<DecompoXor.Api.Program> factory)
     {
-        _factory = factory;
+        // Ensure the mock AI provider is used during integration testing to avoid external service calls.
+        _factory = factory.WithWebHostBuilder(builder =>
+            builder.ConfigureAppConfiguration((context, config) =>
+                config.AddInMemoryCollection(new System.Collections.Generic.Dictionary<string, string>
+                {
+                    { "AI:Provider", "mock" },
+                    { "AI:BaseUrl", "http://localhost" }
+                })));
     }
 
     [Fact]

@@ -1,20 +1,20 @@
 namespace DecompoXor.Application.Features.StoryDecomposition;
 
 using DecompoXor.Domain.Entities;
-using DecompoXor.Application.Abstractions.AI;
-using DecompoXor.Application.Abstractions.RAG;
+using DecompoXor.Infrastructure.Abstractions.AI;
+using DecompoXor.Infrastructure.Abstractions.RAG;
 using Newtonsoft.Json.Linq;
 using DecompoXor.Application.Utilities;
 
 public class StoryDecompositionService
 {
     private const string PromptFileName = "story-analysis-prompt.txt";
-    private readonly ILLMService _llmService;
+    private readonly IChatCompletionService _chatService;
     private readonly IRagService _ragService;
 
-    public StoryDecompositionService(ILLMService llmService, IRagService ragService)
+    public StoryDecompositionService(IChatCompletionService chatService, IRagService ragService)
     {
-        _llmService = llmService;
+        _chatService = chatService;
         _ragService = ragService;
     }
 
@@ -22,7 +22,7 @@ public class StoryDecompositionService
     {
         var context = await _ragService.GetContext(story.AcceptanceCriteria);
         var prompt = await LoadPrompt(PromptFileName, story.AcceptanceCriteria, context);
-        var response = await _llmService.Generate(prompt, context);
+        var response = await _chatService.GenerateAsync(prompt);
         var result = LlmJsonParser.ParseObject(response);
         // Convert the raw JSON tasks directly into the domain model type.
         var tasks = ConvertToTasks(result["tasks"]);

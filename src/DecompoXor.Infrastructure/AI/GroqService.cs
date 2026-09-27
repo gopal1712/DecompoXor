@@ -1,11 +1,12 @@
 using Newtonsoft.Json;
+using DecompoXor.Infrastructure.Abstractions.AI;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
-using DecompoXor.Application.Abstractions.AI;
+using DecompoXor.Infrastructure.Abstractions.AI;
 
 namespace DecompoXor.Infrastructure.AI;
 
-public sealed class GroqService : ILLMService
+public sealed class GroqService : IChatCompletionService
 {
     private readonly HttpClient _httpClient;
     private readonly ILogger<GroqService> _logger;
@@ -20,7 +21,7 @@ public sealed class GroqService : ILLMService
         _apiKey = configuration["Groq:ApiKey"] ?? throw new InvalidOperationException("Groq:ApiKey is required when Groq is selected.");
     }
 
-    public async Task<string> Generate(string prompt, string context = "")
+    public async Task<string> GenerateAsync(string prompt, CancellationToken cancellationToken = default)
     {
         var startTime = DateTime.UtcNow;
         try
@@ -30,7 +31,7 @@ public sealed class GroqService : ILLMService
                 model = _configuration["Groq:Model"],
                 messages = new[]
                 {
-                    new { role = "user", content = $"Context:\n{context}\n\nTask:\n{prompt}\n\nResponse:" }
+                    new { role = "user", content = $"Task:\n{prompt}\n\nResponse:" }
                 },
                 temperature = _configuration.GetValue<double>("Groq:Temperature"),
                 max_tokens = _configuration.GetValue<int>("Groq:MaxTokens")
@@ -42,7 +43,7 @@ public sealed class GroqService : ILLMService
                 Content = new StringContent(JsonConvert.SerializeObject(request), System.Text.Encoding.UTF8, "application/json")
             };
             httpRequest.Headers.Add("Authorization", $"Bearer {_apiKey}");
-            var response = await _httpClient.SendAsync(httpRequest);
+            var response = await _httpClient.SendAsync(httpRequest, cancellationToken);
             var responseBody = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {

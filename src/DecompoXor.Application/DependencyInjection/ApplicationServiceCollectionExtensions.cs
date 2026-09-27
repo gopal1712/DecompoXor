@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using DecompoXor.Application.Abstractions.AI;
-using DecompoXor.Application.Abstractions.RAG;
+using DecompoXor.Infrastructure.Abstractions.RAG;
 using DecompoXor.Application.Features.StoryDecomposition;
 
 namespace DecompoXor.Application.DependencyInjection;

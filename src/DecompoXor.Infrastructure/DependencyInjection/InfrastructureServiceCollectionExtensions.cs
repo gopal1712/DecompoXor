@@ -1,7 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using DecompoXor.Application.Abstractions.AI;
-using DecompoXor.Application.Abstractions.RAG;
+// AI abstractions now live in DecompoXor.Infrastructure.Abstractions.AI
+using DecompoXor.Infrastructure.Abstractions.AI;
+using DecompoXor.Infrastructure.Abstractions.RAG;
+// The AI implementations are in DecompoXor.Infrastructure.AI.
 using DecompoXor.Infrastructure.AI;
 
 namespace DecompoXor.Infrastructure.DependencyInjection;
@@ -10,20 +12,13 @@ public static class InfrastructureServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        // Register concrete AI/LLM services (both implementations are added as HttpClient factories)
-        services.AddHttpClient<OllamaService>();
-        services.AddHttpClient<GroqService>();
-        // Provider selection logic mirrors the original Program.cs behavior
-        services.AddScoped<ILLMService>(svc =>
-        {
-            var cfg = svc.GetRequiredService<IConfiguration>();
-            var useGroq = cfg.GetValue<string>("LLM:Provider")?.Equals("Groq", StringComparison.OrdinalIgnoreCase) == true;
-            return useGroq ? svc.GetRequiredService<GroqService>() : svc.GetRequiredService<OllamaService>();
-        });
+        // Register AI services (chat completion & embedding) directly.
+        services.AddScoped<IChatCompletionService, GroqService>(); // or OllamaService based on configuration later
+        services.AddScoped<IEmbeddingGenerationService, EmbeddingService>();
 
         // Register RAG infrastructure
         services.AddHttpClient<EmbeddingService>();
-        services.AddSingleton<VectorStore>();
+        services.AddSingleton<VectorStore>(); // unchanged, still the vector store implementation
         services.AddScoped<IRagService, RagService>();
         services.AddScoped<RagService, RagService>(); // concrete implementation
 

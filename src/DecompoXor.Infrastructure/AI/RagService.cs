@@ -1,13 +1,14 @@
-using DecompoXor.Application.Abstractions.RAG;
+using DecompoXor.Infrastructure.Abstractions.RAG;
+using DecompoXor.Infrastructure.Abstractions.AI;
 
 namespace DecompoXor.Infrastructure.AI;
 
 public sealed class RagService : IRagService
 {
-    private readonly EmbeddingService _embeddingService;
+    private readonly IEmbeddingGenerationService _embeddingService;
     private readonly VectorStore _vectorStore;
 
-    public RagService(EmbeddingService embeddingService, VectorStore vectorStore)
+    public RagService(IEmbeddingGenerationService embeddingService, VectorStore vectorStore)
     {
         _embeddingService = embeddingService;
         _vectorStore = vectorStore;

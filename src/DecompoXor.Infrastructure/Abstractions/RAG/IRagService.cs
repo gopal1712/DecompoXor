@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace DecompoXor.Application.Abstractions.RAG;
+namespace DecompoXor.Infrastructure.Abstractions.RAG;
 
 public interface IRagService
 {
