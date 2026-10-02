@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f5ef">
+  <title>DecompoXor | Story planning</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Workspace">
+      <a class="brand" href="/" aria-label="DecompoXor home">
+        <span class="brand-mark">DX</span>
+        <span class="brand-name">DECOMPOXOR</span>
+      </a>
+
+      <button class="new-analysis" id="new-analysis" type="button">
+        <span class="new-icon" aria-hidden="true">+</span>
+        <span>New analysis</span>
+      </button>
+
+      <div class="sidebar-label">PIPELINE</div>
+      <ol class="pipeline-list">
+        <li><span class="step-number">01</span><span>Retrieve context</span></li>
+        <li><span class="step-number">02</span><span>Break down work</span></li>
+        <li><span class="step-number">03</span><span>Validate estimate</span></li>
+      </ol>
+
+      <div class="sidebar-bottom">
+        <span class="provider-status"><span class="status-dot"></span> RAG WORKSPACE</span>
+        <p>Groq generation<br>OpenRouter embeddings</p>
+      </div>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">STORY DECOMPOSITION</p>
+          <h1>Planning studio</h1>
+        </div>
+        <div class="model-label"><span class="model-dot"></span> RAG-POWERED</div>
+      </header>
+
+      <section class="conversation" id="conversation" aria-label="Story planning conversation" aria-live="polite">
+      </section>
+
+      <template id="welcome-template">
+        <div class="welcome enter">
+          <div class="welcome-mark" aria-hidden="true">DX</div>
+          <p class="eyebrow">FROM CRITERIA TO DELIVERY</p>
+          <h2>What are we building?</h2>
+          <p class="welcome-copy">Share the acceptance criteria. Get a structured breakdown, questions, and a story-point estimate.</p>
+          <div class="sample-prompts" aria-label="Example acceptance criteria">
+            <button type="button" class="sample-prompt" data-prompt="As a member, I can reset my password using a verified email link.">Password reset</button>
+            <button type="button" class="sample-prompt" data-prompt="Account administrators can export the last 30 days of activity as a CSV file.">Activity export</button>
+            <button type="button" class="sample-prompt" data-prompt="Customers receive an order confirmation after checkout and can view delivery status.">Order updates</button>
+          </div>
+        </div>
+      </template>
+
+      <section class="composer-area" aria-label="Acceptance criteria input">
+        <form class="composer" id="composer-form">
+          <label class="visually-hidden" for="criteria-input">Acceptance criteria</label>
+          <textarea id="criteria-input" name="acceptanceCriteria" rows="2" maxlength="6000" placeholder="Describe the acceptance criteria..." required></textarea>
+          <div class="composer-footer">
+            <div class="composer-hint"><kbd>Enter</kbd> to send <span class="hint-divider">·</span> <kbd>Shift</kbd> + <kbd>Enter</kbd> for a new line</div>
+            <div class="composer-actions">
+              <span class="character-count" id="character-count">0 / 6000</span>
+              <button class="send-button" id="send-button" type="submit">
+                <span>Decompose</span>
+                <span class="send-arrow" aria-hidden="true">&#8599;</span>
+              </button>
+            </div>
+          </div>
+        </form>
+        <p class="disclaimer">AI-generated planning output. Review tasks and estimates with your team.</p>
+        <p class="visually-hidden" id="live-status" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

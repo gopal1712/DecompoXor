@@ -14,6 +14,7 @@ The API accepts only `acceptanceCriteria`. Story title and description are not r
 - Loads one combined analysis prompt from the `prompts` directory.
 - Uses a retrieval-augmented generation (RAG) pipeline with OpenRouter embeddings and an in-memory vector store.
 - Uses Groq for text generation and OpenRouter for embeddings.
+- Includes a same-origin chat UI for submitting acceptance criteria and reviewing decomposition results.
 
 ## RAG Pipeline
 
@@ -84,6 +85,12 @@ dotnet run --project src/DecompoXor.Api/DecompoXor.Api.csproj --launch-profile h
 ```
 
 The `http` profile serves at `http://localhost:5235`; Swagger is at `http://localhost:5235/swagger`. The default `DecompoXor.Api` profile uses `http://localhost:5180` and `https://localhost:7180`. The `https` profile uses `https://localhost:7097` and `http://localhost:5235`.
+
+### Use the chat UI
+
+Open the profile URL, for example `http://localhost:5235/`. Enter acceptance criteria or choose a sample prompt, then select **Decompose**. The UI shows an animated processing state followed by the estimate, task breakdown, questions, and reasoning. Use **Copy JSON** to copy the full API response, **Retry** after a failed request, or **New analysis** to clear the conversation. Press Enter to submit or Shift+Enter to add a line.
+
+The chat UI calls the same-origin `POST /api/story/decompose` endpoint. Swagger remains available at `/swagger`, and the endpoint can also be called directly as described below.
 
 CSV input paths are resolved relative to the running application's base directory, not the repository root. To use the sample CSV under the source tree, set the folder to its absolute path before starting the API:
 
