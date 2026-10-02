@@ -17,7 +17,8 @@ public sealed class EmbeddingService : IEmbeddingGenerationService
     {
         _httpClient = httpClient;
         _configuration = configuration;
-        _apiKey = configuration["Openrouter:ApiKey"] ?? throw new InvalidOperationException("Openrouter:ApiKey is required when OpenRouter is selected.");
+        // Retrieve API key from environment variable set by the .env loader (Openrouter__ApiKey)
+        _apiKey = Environment.GetEnvironmentVariable("Openrouter__ApiKey") ?? throw new InvalidOperationException("Openrouter:ApiKey is required when OpenRouter is selected.");
     }
 
     public async Task<float[]> GetEmbeddingAsync(string text, CancellationToken cancellationToken = default)
@@ -43,7 +44,7 @@ public sealed class EmbeddingService : IEmbeddingGenerationService
         httpRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
 
         using var response = await _httpClient.SendAsync(httpRequest, cancellationToken);
-        response.EnsureSuccessStatusCode();
+         response.EnsureSuccessStatusCode();
 
         var responseBody = await response.Content.ReadAsStringAsync(cancellationToken);
         var data = JsonConvert.DeserializeObject<EmbeddingResponse>(responseBody);

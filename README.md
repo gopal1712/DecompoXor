@@ -101,6 +101,36 @@ dotnet run --project src/DecompoXor.Api/DecompoXor.Api.csproj --launch-profile h
 
 Each CSV file in that directory is read and indexed during story decomposition. The application currently does not copy the source `Input` directory to the build output automatically.
 
+## Docker Deployment
+
+Prerequisite: Docker Desktop with Linux containers, or another Docker Engine with Compose v2.
+
+From the repository root, make a local environment file and replace both placeholders with valid provider keys:
+
+```powershell
+Copy-Item .env.example .env
+notepad .env
+```
+
+`.env` is ignored by Git and excluded from the Docker build context. Do not commit it or put credentials in the Dockerfile.
+
+Build the image and start the API:
+
+```powershell
+docker compose up --build -d
+```
+
+The chat UI is at `http://localhost:8080/`; the API endpoint is `http://localhost:8080/api/story/decompose`. Change `HTTP_PORT` in `.env` to use another host port. The image includes the sample CSV folder at `/app/Input/Project1`; Compose sets `Pipeline__InputFolder` to that path. `Groq__ApiKey` and `Openrouter__ApiKey` from `.env` are passed to the container as ASP.NET configuration environment variables.
+
+View logs or stop the deployment:
+
+```powershell
+docker compose logs -f api
+docker compose down
+```
+
+For production, use your deployment platform's secret manager instead of a checked-in env file and terminate HTTPS at a reverse proxy or ingress. Do not pass API keys as Docker build arguments or bake them into image layers.
+
 ## Chat UI Walkthrough
 
 The built-in chat page is served from the API root and submits acceptance criteria to `POST /api/story/decompose`.

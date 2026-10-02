@@ -14,7 +14,8 @@ public sealed class GroqService : IChatCompletionService
     {
         _httpClient = httpClient;
         _configuration = configuration;
-        _apiKey = configuration["Groq:ApiKey"] ?? throw new InvalidOperationException("Groq:ApiKey is required when Groq is selected.");
+        // Retrieve API key from environment variable set by the .env loader (Groq__ApiKey)
+        _apiKey = Environment.GetEnvironmentVariable("Groq__ApiKey") ?? throw new InvalidOperationException("Groq:ApiKey is required when Groq is selected.");
     }
 
     public async Task<string> GenerateAsync(string prompt, CancellationToken cancellationToken = default)

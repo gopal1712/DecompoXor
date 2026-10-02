@@ -1,2 +1,7 @@
 **/bin/
 **/obj/
+
+# Local deployment secrets
+.env
+.env.*
+!.env.example
