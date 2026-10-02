@@ -101,6 +101,32 @@ dotnet run --project src/DecompoXor.Api/DecompoXor.Api.csproj --launch-profile h
 
 Each CSV file in that directory is read and indexed during story decomposition. The application currently does not copy the source `Input` directory to the build output automatically.
 
+## Chat UI Walkthrough
+
+The built-in chat page is served from the API root and submits acceptance criteria to `POST /api/story/decompose`.
+
+1. Open the planning studio. Choose a sample prompt or enter acceptance criteria.
+
+  ![Step 1: Ready to enter acceptance criteria](src/DecompoXor.Api/wwwroot/ui-step-1-ready.png)
+
+2. Review or edit the criteria in the composer, then submit with **Decompose** or Enter.
+
+  ![Step 2: Acceptance criteria entered in the composer](src/DecompoXor.Api/wwwroot/ui-step-2-criteria.png)
+
+3. The interface shows the RAG analysis progress while the API retrieves context and generates the breakdown.
+
+  ![Step 3: RAG analysis in progress](src/DecompoXor.Api/wwwroot/ui-step-3-processing.png)
+
+4. Review the estimate and generated task list. Use **Copy JSON** to copy the complete response.
+
+  ![Step 4: Estimate and task breakdown](src/DecompoXor.Api/wwwroot/ui-step-4-result.png)
+
+5. Scroll through the response to review clarifying questions and estimation reasoning.
+
+  ![Step 5: Clarifying questions and reasoning](src/DecompoXor.Api/wwwroot/ui-step-5-details.png)
+
+The processing and result screenshots use a mocked browser response for illustration; they do not represent a live provider response.
+
 ## API Usage
 
 ### Decompose a story
