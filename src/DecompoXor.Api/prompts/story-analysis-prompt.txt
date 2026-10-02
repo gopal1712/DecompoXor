@@ -10,7 +10,7 @@ TASK BREAKDOWN:
 - Each task should be completable in 2-3 days
 - Cover all technical areas needed
 - Tasks should be independent but logically related
-- Categorize by area: Database, API, UI, Auth, DevOps, Testing
+- Set areaOfChange to exactly one of: UI, API, Database, Authentication, DevOps, Testing, Documentation, Other
 - Include technical considerations
 - Each task should have clear acceptance criteria
 - Estimate the complete story, not individual tasks
@@ -21,7 +21,7 @@ FOR EACH TASK:
   * Include technical approach
   * Mention key considerations
   * Reference relevant technologies/patterns
-- areaOfChange: Choose from: UI, API, Database, Authentication, Testing, Documentation, Other
+- areaOfChange: Choose exactly one value from: UI, API, Database, Authentication, DevOps, Testing, Documentation, Other
  
 PLANNING QUESTIONS:
 Generate 5-7 clarifying questions specific to this story:
@@ -29,31 +29,18 @@ Generate 5-7 clarifying questions specific to this story:
 - Questions should be specific to THIS story (not generic)
  
 OVERALL ESTIMATION:
-- Estimate TOTAL story points for the entire story (use: 1,3, 5, 8, 13, 21, or 34)
-- Consider: complexity, dependencies, unknown factors, testing effort
- 
-OUTPUT FORMAT (VALID JSON ONLY - NO EXTRA TEXT):
- 
-{
-  "tasks": [
-    {
-      "title": "A specific task derived from the acceptance criteria",
-      "description": "A 40-80 word implementation description specific to this story, including the technical approach and key considerations.",
-      "areaOfChange": "One specific value: UI, API, Database, Authentication, Testing, Documentation, or Other"
-    }
-  ],
-  "questions": [
-    "A specific clarification question about this story?",
-    "Another specific clarification question about this story?"
-  ],
-  "estimatedTotalStoryPoints": 13,
-  "reasoning": {
-    "acceptanceCriteriaMapping": "How each acceptance criterion maps to tasks.",
-    "breakdownStrategy": "Why this breakdown and task sequence.",
-    "technicalConsiderations": "Key technical risks and decisions.",
-    "estimationJustification": "Why this Fibonacci estimate was chosen."
-  }
-}
+- Estimate the complete story once; do not add up individual task estimates.
+- Choose exactly one allowed value: 1, 3, 5, 8, or 13.
+- Select the value from the acceptance criteria and task breakdown, considering scope, technical complexity, dependencies, integration points, testing effort, and explicit unknowns.
+- Use this scale: 1 = a very small, low-risk change; 3 = a small change with limited coordination; 5 = a moderate change involving several related steps; 8 = a substantial change with multiple components or meaningful integration/testing risk; 13 = a very large or highly uncertain story that is still coherent as one story.
+- Choose the lowest value whose description fits the story. Move to the next value only when the criteria demonstrate added scope, complexity, dependencies, or risk. Do not default to the largest value or reuse an example estimate.
+- In `reasoning.estimationJustification`, cite the specific scope and risk factors that led to the chosen value and why the adjacent lower value would not fit.
+
+Return one root JSON object with these fields and no surrounding text:
+- `tasks`: an array of 4-7 objects, each with `title`, `description`, and `areaOfChange`.
+- `questions`: an array of 5-7 story-specific strings.
+- `estimatedTotalStoryPoints`: one integer selected using the estimation rubric above.
+- `reasoning`: an object with non-empty `acceptanceCriteriaMapping`, `breakdownStrategy`, `technicalConsiderations`, and `estimationJustification` strings.
  
 IMPORTANT:
 - Output ONLY valid JSON

@@ -16,11 +16,11 @@ public class StoryController : ControllerBase
     }
 
     [HttpPost("decompose")]
-    public async Task<IActionResult> DecomposeStory([FromBody] Story story)
+    public async Task<IActionResult> DecomposeStoryAsync([FromBody] Story story, CancellationToken cancellationToken)
     {
         try
         {
-            var result = await _decompositionService.DecomposeStory(story);
+            var result = await _decompositionService.DecomposeStoryAsync(story, cancellationToken);
             return Ok(result);
         }
         catch (InvalidOperationException ex)

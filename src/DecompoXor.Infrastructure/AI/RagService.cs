@@ -14,17 +14,17 @@ public sealed class RagService : IRagService
         _vectorStore = vectorStore;
     }
 
-    public async Task<string> GetContext(string query)
+    public async Task<string> GetContextAsync(string query, CancellationToken cancellationToken = default)
     {
         if (!_vectorStore.HasDocuments) return string.Empty;
-        var queryEmbedding = await _embeddingService.GetEmbeddingAsync(query);
+        var queryEmbedding = await _embeddingService.GetEmbeddingAsync(query, cancellationToken);
         var similar = _vectorStore.Search(queryEmbedding);
         return string.Join("\n\n", similar.Select(d => d.Content));
     }
 
-    public async Task IndexDocument(string id, string content)
+    public async Task IndexDocumentAsync(string id, string content, CancellationToken cancellationToken = default)
     {
-        var embedding = await _embeddingService.GetEmbeddingAsync(content);
+        var embedding = await _embeddingService.GetEmbeddingAsync(content, cancellationToken);
         _vectorStore.AddDocument(id, content, embedding);
     }
 }

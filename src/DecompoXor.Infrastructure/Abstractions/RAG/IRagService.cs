@@ -4,6 +4,6 @@ namespace DecompoXor.Infrastructure.Abstractions.RAG;
 
 public interface IRagService
 {
-    Task<string> GetContext(string query);
-    Task IndexDocument(string id, string content);
+    Task<string> GetContextAsync(string query, CancellationToken cancellationToken = default);
+    Task IndexDocumentAsync(string id, string content, CancellationToken cancellationToken = default);
 }

@@ -12,8 +12,12 @@ public static class InfrastructureServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        // Register AI services (chat completion & embedding) directly.
-        services.AddScoped<IChatCompletionService, GroqService>(); // or OllamaService based on configuration later
+        // Register real AI implementations only.
+        services.AddScoped<GroqService>();
+        services.AddScoped<EmbeddingService>();
+
+        // Resolve IChatCompletionService and IEmbeddingGenerationService directly to the real services.
+        services.AddScoped<IChatCompletionService, GroqService>();
         services.AddScoped<IEmbeddingGenerationService, EmbeddingService>();
 
         // Register RAG infrastructure
